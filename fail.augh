@@ -1,0 +1,22 @@
+# initialize the counter
+int count
+count 1
+
+# print the initial count
+speakup count
+
+int max
+max 10
+
+here conditional
+== count max
+yep go doneplace
+nope go addplace
+
+here addplace
+embiggen count
+go conditional
+
+here doneplace
+augh
+

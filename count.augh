@@ -1,0 +1,31 @@
+# initialize the counter
+int count 1
+
+# print the initial count
+speakup count
+
+# the maximum to compare the counter against
+int max 10
+
+# 'here' marks a label you can go to.
+# contitional statements work like this:
+# First a line that is a boolean.
+# Then a line pointing where to go if
+# the condition was true.
+# Then a line pointing where to go if
+# the condition was false.
+here conditional
+== count max
+yep go doneplace
+nope go addplace
+
+# a noble spirit increases the count
+here addplace
+embiggen count
+speakup count
+go conditional
+
+# end the program with a nice 'augh'
+here doneplace
+augh
+
