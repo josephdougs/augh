@@ -61,7 +61,7 @@ class FirstPass
             puts
             puts "You used an uppercase character!"
             puts str
-            puts "Shame on you for this disgrace."
+            puts "SHAME on you for this disgrace."
             puts
             exit 1
         end
