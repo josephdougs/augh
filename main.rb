@@ -5,6 +5,10 @@ require './preprocess.rb'
 def interpret(filename)
     first_pass = FirstPass.new(ARGV[0])
     @lines, @heres = first_pass.process_file
+    p @lines
+    puts
+    puts
+    p @heres
     # find where all the here statemens are, and what
     # their names are
     # TODO: start interpreting the file

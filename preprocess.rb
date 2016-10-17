@@ -12,6 +12,7 @@ class FirstPass
     @line_list
     @heres
     @comment_counter
+    @num_non_code_lines
     @is_file_read
 
     def initialize(filepath)
@@ -20,6 +21,7 @@ class FirstPass
         @heres = {}
         # lets us figure out if they have written enough comments
         @comment_counter = 0
+        @num_non_code_lines = 0
         @file_is_read = false
     end
 
@@ -29,7 +31,9 @@ class FirstPass
             f.each_line.with_index do |line, index|
                 # remove newline
                 line = line.chomp
-                if line != "" && !mark_if_comment(line)
+                line_is_blank = line == ""
+                @num_non_code_lines += 1 if line_is_blank
+                if !line_is_blank && !mark_if_comment(line)
                     fail_if_uppercase(line)
                     @line_list.push(line)
                 end
@@ -43,7 +47,10 @@ class FirstPass
 
     def mark_if_comment(line)
         well_does_it = line.start_with?(COMMENT_CHAR)
-        @comment_counter += 1 if well_does_it
+        if well_does_it
+            @comment_counter += 1
+            @num_non_code_lines += 1
+        end
         return well_does_it
     end
 
@@ -64,7 +71,7 @@ class FirstPass
     # get the internal representation of a line number
     # from the actual line number of the file
     def get_internal_index(index)
-        return index - @comment_counter
+        return index - @num_non_code_lines
     end
 
     def fail_too_many_tokens(max_tokens, line_number)
