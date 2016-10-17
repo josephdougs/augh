@@ -10,12 +10,14 @@ REQUIRED_COMMENT_PERCENTAGE = 0.15
 class FirstPass
     @filepath
     @line_list
+    @heres
     @comment_counter
     @is_file_read
 
     def initialize(filepath)
         @filepath = filepath
         @line_list = []
+        @heres = {}
         # lets us figure out if they have written enough comments
         @comment_counter = 0
         @file_is_read = false
@@ -24,24 +26,52 @@ class FirstPass
     def process_file
         return @line_list if @file_is_read
         File.open(@filepath, "r") do |f|
-            f.each_line do |line|
+            f.each_line.with_index do |line, index|
                 # remove newline
                 line = line.chomp
                 if line != "" && !mark_if_comment(line)
                     fail_if_uppercase(line)
                     @line_list.push(line)
                 end
+                handle_if_here(line, index + 1)
             end
         end
         fail_if_too_few_comments
         @file_is_read = true
-        return @line_list
+        return @line_list, @heres
     end
 
     def mark_if_comment(line)
         well_does_it = line.start_with?(COMMENT_CHAR)
         @comment_counter += 1 if well_does_it
         return well_does_it
+    end
+
+    def handle_if_here(line, index)
+        arr = line.split(" ")
+        if arr[0] == "here"
+            if arr.length > 2
+                fail_too_many_tokens(2)
+            end
+            if @heres[arr[1]]
+                fail_redundant_here
+            end
+            # associate the name with the place in the code
+            @heres[arr[1]] = index
+        end
+    end
+
+    def fail_too_many_tokens(max_tokens, line_number)
+        puts "Too many tokens on line #{line_number} ."
+        puts "The maximum number of tokens"
+        puts "for this statement is #{max_tokens}."
+        exit 1
+    end
+
+    def fail_redundant_here
+        puts "You can't have more than one"
+        puts "here with the same name!"
+        exit 1
     end
 
     def fail_if_too_few_comments
@@ -73,4 +103,3 @@ if __FILE__ == $0
     lines = first_pass.process_file
     p lines
 end
-
