@@ -33,7 +33,7 @@ class FirstPass
                     fail_if_uppercase(line)
                     @line_list.push(line)
                 end
-                handle_if_here(line, index + 1)
+                handle_if_here(line, index)
             end
         end
         fail_if_too_few_comments
@@ -51,26 +51,36 @@ class FirstPass
         arr = line.split(" ")
         if arr[0] == "here"
             if arr.length > 2
-                fail_too_many_tokens(2)
+                fail_too_many_tokens(2, index + 1)
             end
             if @heres[arr[1]]
                 fail_redundant_here
             end
             # associate the name with the place in the code
-            @heres[arr[1]] = index
+            @heres[arr[1]] = get_internal_index(index)
         end
     end
 
+    # get the internal representation of a line number
+    # from the actual line number of the file
+    def get_internal_index(index)
+        return index - @comment_counter
+    end
+
     def fail_too_many_tokens(max_tokens, line_number)
+        puts
         puts "Too many tokens on line #{line_number} ."
         puts "The maximum number of tokens"
         puts "for this statement is #{max_tokens}."
+        puts
         exit 1
     end
 
     def fail_redundant_here
+        puts
         puts "You can't have more than one"
         puts "here with the same name!"
+        puts
         exit 1
     end
 
