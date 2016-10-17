@@ -2,7 +2,7 @@
 int count 1
 
 # print the initial count
-speakup count
+print count
 
 # the maximum to compare the counter against
 int max 10
@@ -15,14 +15,14 @@ int max 10
 # Then a line pointing where to go if
 # the condition was false.
 here conditional
-== count max
+count == max
 yep go doneplace
 nope go addplace
 
 # a noble spirit increases the count
 here addplace
 embiggen count
-speakup count
+print count
 go conditional
 
 # end the program with a nice 'augh'
