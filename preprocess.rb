@@ -35,7 +35,7 @@ class FirstPass
                 @num_non_code_lines += 1 if line_is_blank
                 if !line_is_blank && !mark_if_comment(line)
                     fail_if_uppercase(line)
-                    @line_list.push(line)
+                    @line_list.push([line, index])
                 end
                 handle_if_here(line, index)
             end
