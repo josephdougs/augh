@@ -7,6 +7,15 @@ KEYWORDS = Set.new ["here", "go", "int",
     "print", "augh"]
 
 
+$KEYMAPPING = {
+    "here" => lambda {|line|},
+    "go" => lambda {|name|
+         $prog_count = $heres[name]
+        },
+    "int"
+        
+}
+
 # this class tokenizes each line
 class Tokenizer
     def initialize(line)
@@ -40,8 +49,8 @@ def interpret(filename)
     # program counter
     $prog_count = 0
     while $prog_count < lines.length
-
-        prog_count += 1
+        
+        $prog_count += 1
     end
 
 end
