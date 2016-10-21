@@ -10,7 +10,8 @@ class Memory
     # TODO: make it a singleton or something like that?
     def initialize
         @vars = {}
-
+    
+        # start a new thread to kill old variables
         Thread.new do
             while true
                 # loop through vars and delete ones
@@ -33,8 +34,24 @@ class Memory
         @vars[name] = Var.new(value)
     end
 
+    def get_var(name)
+        if !@vars[name]
+            nil_var_fail
+        end
+        return @vars[name]
+    end
+
     def bad_name_fail
+        puts
         puts "Given name is not valid"
+        puts
+        exit 1
+    end
+
+    def nil_var_fail
+        puts
+        puts "No variable with the name: #{name} found."
+        puts
         exit 1
     end
 end

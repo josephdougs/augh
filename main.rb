@@ -1,5 +1,6 @@
 require 'set'
 require './preprocess.rb'
+require './memory.rb'
 
 # the set of special keywords
 KEYWORDS = Set.new ["here", "go", "int",
@@ -10,9 +11,21 @@ KEYWORDS = Set.new ["here", "go", "int",
 $KEYMAPPING = {
     "here" => lambda {|line|},
     "go" => lambda {|name|
-         $prog_count = $heres[name]
+            $prog_count = $heres[name]
         },
-    "int"
+    "int" => lambda {|name, value|
+            newInt = Integ.new(value)
+            $memory.new_var(name, newInt)
+        },
+    "bool" => lambda {|name, value|
+            newBool = Bool.new(value)
+            $memory.new_var(name, newBool)
+        },
+    "string" => lambda {|name, value|
+            newString = Str.new(value)
+            $memory.new_var(name, newString)
+        },
+
         
 }
 
@@ -42,6 +55,10 @@ def interpret(filename)
     puts
     puts
     p heres
+    
+    # set up the memory
+    $memory = Memory.new
+
     # find where all the here statements are, and what
     # their names are
     # TODO: start interpreting the file

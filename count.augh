@@ -16,8 +16,8 @@ int max 10
 # the condition was false.
 here conditional
 count == max
-yep go doneplace
-nope go addplace
+go doneplace
+go addplace
 
 # a noble spirit increases the count
 here addplace
