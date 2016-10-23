@@ -4,9 +4,22 @@ require './memory.rb'
 
 # the set of special keywords
 KEYWORDS = Set.new ["here", "go", "int",
-    "bool", "string", "yep", "nope", "embiggen",
-    "print", "augh"]
+    "bool", "string", "embiggen", "ensmallen",
+    "addem", "subem", "multem", "divem",
+    "==", "<", ">", "<=", ">=", "print", "augh"]
 
+def wrong_type_fail
+    puts
+    puts "You used the wrong type!!!"
+    puts
+    exit 1
+end
+
+def fail_on_wrong_type(val, type)
+    if !val.is_a?(type)
+        wrong_type_fail
+    end
+end
 
 $KEYMAPPING = {
     "here" => lambda {|line|},
@@ -25,7 +38,28 @@ $KEYMAPPING = {
             newString = Str.new(value)
             $memory.new_var(name, newString)
         },
-
+    "embiggen" => lambda {|name|
+            # gets and deletes value
+            val = $memory.get_val(name)
+            fail_on_wrong_type(val, Integ)
+            val += 1
+            # set the value and reset its timer
+            $memory.new_var(name, val)
+        },
+    "ensmallen" => lambda {|name|
+            val = $memory.get_val(name)
+            fail_on_wrong_type(val, Integ)
+            val -= 1
+            $memory.new_var(name, val)
+        },
+    "addem" => lambda {|res, name1, name2|
+            val1 = $memory.get_val(name1)
+            fail_on_wrong_type(val1, Integ)
+            val2 = $memory.get_val(name2)
+            fail_on_wrong_type(val2, Integ)
+            result = val1 + val2
+            $memory.new_var(res, result)
+        },
         
 }
 

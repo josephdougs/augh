@@ -38,7 +38,9 @@ class Memory
         if !@vars[name]
             nil_var_fail
         end
-        return @vars[name]
+        val = @vars[name].val
+        delete @vars[name]
+        return val
     end
 
     def bad_name_fail

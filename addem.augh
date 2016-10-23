@@ -1,0 +1,14 @@
+# this is the first value
+int first 2
+# this is the second value
+int second 5
+
+# the sum here should be 7
+# and it'll get stored in result
+addem result first second
+
+# here we print the result cause duh
+print result
+# exit the program
+augh
+
