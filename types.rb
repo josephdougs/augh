@@ -49,3 +49,4 @@ class Str < Type
         val = input
     end
 end
+
