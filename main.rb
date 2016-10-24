@@ -60,6 +60,30 @@ $KEYMAPPING = {
             result = val1 + val2
             $memory.new_var(res, result)
         },
+    "subem" => lambda {|res, name1, name2|
+            val1 = $memory.get_val(name1)
+            fail_on_wrong_type(val1, Integ)
+            val2 = $memory.get_val(name2)
+            fail_on_wrong_type(val2, Integ)
+            result = val1 - val2
+            $memory.new_var(res, Integ.new(result))
+        },
+    "multem" => lambda {|res, name1, name2|
+            val1 = $memory.get_val(name1)
+            fail_on_wrong_type(val1, Integ)
+            val2 = $memory.get_val(name2)
+            fail_on_wrong_type(val2, Integ)
+            result = val1 * val2
+            $memory.new_var(res, Integ.new(result))
+        },
+    "divem" => lambda {|res, name1, name2|
+            val1 = $memory.get_val(name1)
+            fail_on_wrong_type(val1, Integ)
+            val2 = $memory.get_val(name2)
+            fail_on_wrong_type(val2, Integ)
+            result = val1 / val2
+            $memory.new_var(res, Integ.new(result))
+        },
         
 }
 

@@ -15,7 +15,8 @@ int max 10
 # Then a line pointing where to go if
 # the condition was false.
 here conditional
-count == max
+iseq count == max
+test iseq
 go doneplace
 go addplace
 
